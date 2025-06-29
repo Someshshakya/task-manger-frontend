@@ -39,7 +39,7 @@ export default function UserDashboard() {
             const token = localStorage.getItem('token');
             console.log('Token available:', !!token);
 
-            const response = await axios.get('/v1/api/tasks/my-tasks');
+            const response = await axios.get('/v1/api/tasks/all-tasks');
             console.log('Full response:', response);
             console.log('Response data:', response.data);
 

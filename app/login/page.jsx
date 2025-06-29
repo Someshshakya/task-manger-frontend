@@ -11,6 +11,7 @@ export default function LoginPage() {
     });
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [loginError, setLoginError] = useState('');
 
     const validateForm = () => {
         const newErrors = {};
@@ -37,6 +38,7 @@ export default function LoginPage() {
         }
 
         setIsLoading(true);
+        setLoginError('');
         try {
             // Update the API endpoint to match your backend
             const response = await axios.post('/v1/api/users/login', formData);
@@ -69,6 +71,7 @@ export default function LoginPage() {
             }
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Login failed. Please check your credentials.';
+            setLoginError(errorMessage);
             console.error('Login error:', errorMessage);
         } finally {
             setIsLoading(false);
@@ -81,6 +84,9 @@ export default function LoginPage() {
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: '' }));
+        }
+        if (loginError) {
+            setLoginError('');
         }
     };
 
@@ -96,6 +102,12 @@ export default function LoginPage() {
                             Sign in to your account to continue
                         </p>
                     </div>
+
+                    {loginError && (
+                        <div className="mb-4 text-red-600 bg-red-100 border border-red-200 rounded p-2 text-center text-sm font-medium">
+                            {loginError}
+                        </div>
+                    )}
 
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                         <div className="space-y-4">
