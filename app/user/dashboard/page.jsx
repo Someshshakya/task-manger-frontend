@@ -63,7 +63,7 @@ export default function UserDashboard() {
                 localStorage.removeItem('userEmail');
                 router.push('/login');
             } else {
-                alert('Failed to fetch tasks. Please try again.');
+                console.error('Failed to fetch tasks. Please try again.');
             }
         } finally {
             setIsLoading(false);
@@ -98,10 +98,10 @@ export default function UserDashboard() {
             await axios.post('/v1/api/tasks/create', formData);
             setFormData({ title: '', description: '' });
             fetchTasks(); // Refresh the tasks list
-            alert('Task created successfully!');
+            console.log('Task created successfully!');
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Failed to create task. Please try again.';
-            alert(errorMessage);
+            console.error(errorMessage);
         } finally {
             setIsCreating(false);
         }
@@ -136,11 +136,11 @@ export default function UserDashboard() {
         if (window.confirm('Are you sure you want to delete this task?')) {
             try {
                 await axios.delete(`/v1/api/tasks/${taskId}`);
-                alert('Task deleted successfully!');
+                console.log('Task deleted successfully!');
                 fetchTasks(); // Refresh the tasks list
             } catch (error) {
                 const errorMessage = error.response?.data?.message || 'Failed to delete task. Please try again.';
-                alert(errorMessage);
+                console.error(errorMessage);
             }
         }
     };
@@ -157,19 +157,19 @@ export default function UserDashboard() {
         e.preventDefault();
 
         if (!editFormData.title.trim()) {
-            alert('Task title is required');
+            console.error('Task title is required');
             return;
         }
 
         try {
             await axios.put(`/v1/api/tasks/${editingTask._id}`, editFormData);
-            alert('Task updated successfully!');
+            console.log('Task updated successfully!');
             setEditingTask(null);
             setEditFormData({ title: '', description: '' });
             fetchTasks(); // Refresh the tasks list
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Failed to update task. Please try again.';
-            alert(errorMessage);
+            console.error(errorMessage);
         }
     };
 

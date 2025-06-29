@@ -71,7 +71,7 @@ export default function AdminDashboard() {
                 setTotalTasks(response.data.total || 0);
                 console.log('Total tasks:', response.data.total);
             } else {
-                console.log('Unexpected response format:', response.data);
+                console.error('Failed to fetch tasks. Please try again.');
                 tasksData = [];
                 setTotalTasks(0);
             }
@@ -92,7 +92,7 @@ export default function AdminDashboard() {
                 localStorage.removeItem('userRole');
                 router.push('/login');
             } else {
-                alert('Failed to fetch tasks. Please try again.');
+                console.error('Failed to fetch tasks. Please try again.');
             }
         } finally {
             setIsLoading(false);
@@ -125,11 +125,11 @@ export default function AdminDashboard() {
         if (window.confirm('Are you sure you want to delete this task?')) {
             try {
                 await axios.delete(`/v1/api/tasks/${taskId}`);
-                alert('Task deleted successfully!');
+                console.log('Task deleted successfully!');
                 fetchAllTasks(); // Refresh the tasks list
             } catch (error) {
                 const errorMessage = error.response?.data?.message || 'Failed to delete task. Please try again.';
-                alert(errorMessage);
+                console.error(errorMessage);
             }
         }
     };
@@ -146,19 +146,19 @@ export default function AdminDashboard() {
         e.preventDefault();
 
         if (!editFormData.title.trim()) {
-            alert('Task title is required');
+            console.error('Task title is required');
             return;
         }
 
         try {
             await axios.put(`/v1/api/tasks/${editingTask._id}`, editFormData);
-            alert('Task updated successfully!');
+            console.log('Task updated successfully!');
             setEditingTask(null);
             setEditFormData({ title: '', description: '' });
             fetchAllTasks(); // Refresh the tasks list
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Failed to update task. Please try again.';
-            alert(errorMessage);
+            console.error(errorMessage);
         }
     };
 

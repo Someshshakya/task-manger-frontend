@@ -45,12 +45,11 @@ export default function RegisterPage() {
     try {
       // Update the API endpoint to match your backend
       await axios.post('/v1/api/users/register', formData);
-      alert('Registration successful! Please login.');
       // Redirect to login page
       router.push('/login');
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Registration failed. Please try again.';
-      alert(errorMessage);
+      console.error('Registration error:', errorMessage);
     } finally {
       setIsLoading(false);
     }

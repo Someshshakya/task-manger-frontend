@@ -67,11 +67,9 @@ export default function LoginPage() {
                     router.push('/user/dashboard');
                 }
             }
-
-            alert('Login successful!');
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Login failed. Please check your credentials.';
-            alert(errorMessage);
+            console.error('Login error:', errorMessage);
         } finally {
             setIsLoading(false);
         }
