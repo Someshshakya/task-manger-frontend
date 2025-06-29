@@ -48,6 +48,8 @@ echo "NEXT_PUBLIC_API_BASE_URL=http://localhost:7008" > .env.local
 npm run dev
 ```
 
+https://task-mangement-ivory-one.vercel.app/v1/api/users/login
+
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Environment Variables
